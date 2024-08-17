@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": ["es6","esnext.bigint"],
+    "types": ["node"] // <--- this one
+  },
+
+  "extends": "@tsconfig/node21/tsconfig.json",
+  "include": ["scripts/**/*"]
+
+}
