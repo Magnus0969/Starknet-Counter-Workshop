@@ -18,7 +18,6 @@ async function main() {
 
   // Declare & deploy contract
   let sierraCode, casmCode;
-
   try {
     ({ sierraCode, casmCode } = await getCompiledCode("workshop_Counter"));
   } catch (error: any) {
@@ -26,7 +25,6 @@ async function main() {
     process.exit(1);
   }
   
-
   const myCallData = new CallData(sierraCode.abi);
   const constructor = myCallData.compile("constructor", {
     input: 1000,
