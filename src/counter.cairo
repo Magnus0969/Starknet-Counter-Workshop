@@ -1,12 +1,8 @@
-
 #[starknet::interface]
 trait ICounter<T> {
     fn get_counter(self: @T) -> u32;
     fn increase_counter( ref self: T);
 }
-
-
-
 
 #[starknet::contract]
 pub mod Counter {
@@ -15,9 +11,7 @@ pub mod Counter {
     use kill_switch::IKillSwitchDispatcher;
     use starknet::ContractAddress;
     use openzeppelin::access::ownable::OwnableComponent;
-
     component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
-
 
     #[storage]
     struct Storage {
@@ -26,6 +20,7 @@ pub mod Counter {
         #[substorage(v0)]
         ownable: OwnableComponent::Storage
     }
+
     #[event]
     #[derive(Drop, starknet::Event)]
     enum Event {
@@ -46,7 +41,6 @@ pub mod Counter {
         let dispatcher = IKillSwitchDispatcher{contract_address: kill_switch_address};
         self.kill_switch.write(dispatcher);
         self.ownable.initializer(initial_owner);
-
     }
     #[abi(embed_v0)]
     impl OwnableMixinImpl = OwnableComponent::OwnableMixinImpl<ContractState>;
@@ -63,11 +57,7 @@ pub mod Counter {
                 self.counter.write(self.counter.read()+1);
                 self.emit(CounterIncreased{counter: self.counter.read()})
             }
-            
-            assert!(!kill_switch.is_active(), "Kill Switch is actived");
-            
-           
+            assert!(!kill_switch.is_active(), "Kill Switch is actived");      
         }
-
     }
 }
